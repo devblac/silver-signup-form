@@ -4,11 +4,18 @@ Monorepo scaffold for Signup Form challenge.
 Simple Signup Form with pure CSS.
 
 - `web/`: React 19 + TS + Vite
-- `server/`: Minimal Go HTTP server
+- `server/`: Go HTTP server with signup API
 
 ## Dev
-- Web: `cd web && npm i %% npm run dev`
-- Server: `cd server && go run ./cmd/server`
+- Web: `cd web && npm i && npm run dev`
+- Server: `cd server && go run main.go`
+
+## Server API
+- `POST /api/signup` - Mock Account Creation (validates email format & password strength)
+- `GET /healthz` - Health check
+
+## Deploy
+Included a Dockerfile for deployment to Koyeb.
 
 ## Libraries used
 - `zod`: For easy validation
