@@ -1,0 +1,29 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hint-warn {
+  color: #b26b00;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.error {
+  color: #b00020;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.success {
+  color: #0a7d00;
+  font-weight: 600;
+  margin-top: 6px;
+}
