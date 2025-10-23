@@ -49,5 +49,13 @@ describe("signup validation", () => {
     });
     expect(result.success).toBe(false);
   });
+
+  it("trims email whitespace", () => {
+    const result = signupSchema.safeParse({
+      email: "  user@test.com  ",
+      password: "Pass123!",
+    });
+    expect(result.success).toBe(true);
+  });
 });
 

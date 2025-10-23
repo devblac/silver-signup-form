@@ -49,15 +49,21 @@ const SignupForm = () => {
   const onSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
     if (!validate()) return;
+    
     setStatus("submitting");
     setServerError("");
     
-    const res = await client.signup(values);
-    // console.log('signup response:', res);
+    // trim email just in case
+    const payload = {
+      email: values.email.trim(),
+      password: values.password
+    };
+    
+    const res = await client.signup(payload);
 
     if (res.success) {
       setStatus("success");
-      setValues({ ...values, password: "" });
+      setValues({ email: "", password: "" });
     } else {
       setStatus("error");
       setServerError(res.error);
@@ -65,11 +71,10 @@ const SignupForm = () => {
     }
   };
 
-  const submitting = status === "submitting";
-
   const [values, setValues] = useState({ email: "", password: "" });
   const setValue = (id: string, v: string) => setValues(prev => ({ ...prev, [id]: v }));
-
+  
+  const submitting = status === "submitting";
   const fields = [
     { id: "email", type: "email" as const, label: "Email", placeholder: "doe@gmail.com", describedBy: "email-hint" },
     { id: "password", type: "password" as const, label: "Password" },

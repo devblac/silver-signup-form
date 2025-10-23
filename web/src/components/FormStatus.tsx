@@ -11,7 +11,7 @@ const FormStatus = ({ success, error, email }: {
   useEffect(() => {
     if (success) {
       setOpen(true);
-      const t = setTimeout(() => setOpen(false), 3000);
+      const t = setTimeout(() => setOpen(false), 4000);
       return () => clearTimeout(t);
     }
   }, [success]);

@@ -5,12 +5,22 @@ export const goClient = (baseUrl: string): SignupClient => {
   
   return {
     async signup(data) {
-      const res = await fetch(`${url}/api/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      return res.json();
+      try {
+        const res = await fetch(`${url}/api/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        
+        if (!res.ok) {
+          return { success: false, error: "Server error" };
+        }
+        
+        return await res.json();
+      } catch (err) {
+        console.error("API error:", err);
+        return { success: false, error: "Network error" };
+      }
     },
   };
 };

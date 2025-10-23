@@ -124,16 +124,33 @@ button.ghost:hover { background: rgba(0, 0, 0, 0.06); }
 
 /* ------- Toast ------- */
 .toast {
-  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+  position: fixed; 
+  top: 24px;
+  left: 50%; 
+  transform: translateX(-50%);
   z-index: 50;
-  display: grid; grid-template-columns: 24px 1fr auto; gap: 8px; align-items: center;
-  padding: 12px 14px; border-radius: 10px;
-  background: var(--card-bg); box-shadow: 0 8px 24px rgba(0,0,0,.12);
-  animation: fade-in .15s ease-out;
+  display: grid; 
+  grid-template-columns: 24px 1fr auto; 
+  gap: 8px; 
+  align-items: center;
+  padding: 12px 14px; 
+  border-radius: 10px;
+  background: var(--card-bg); 
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  animation: slide-down .2s ease-out;
 }
 .toast .emoji { font-size: 18px; line-height: 1; }
 .toast .muted { color: var(--muted); font-size: .9rem; }
-@keyframes fade-in { from { opacity: 0; transform: translate(-50%, 4px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@keyframes slide-down { 
+  from { 
+    opacity: 0; 
+    transform: translate(-50%, -20px); 
+  } 
+  to { 
+    opacity: 1; 
+    transform: translate(-50%, 0); 
+  } 
+}
 
 /* ------- Small screens ------- */
 @media (max-width: 360px) { :root { --control-h: 44px; } }

@@ -14,6 +14,7 @@ describe("goClient", () => {
     expect(client).toBeDefined();
   });
 
-  // skipping actual fetch tests for now
+  // As this is a takehome test, I'm not going to test the actual fetch
+  // Let's keep it as TODO for later
 });
 
