@@ -10,6 +10,14 @@ describe("signup validation", () => {
     expect(result.success).toBe(true);
   });
 
+  it("rejects email without @", () => {
+    const result = signupSchema.safeParse({
+      email: "notanemail",
+      password: "Password123!",
+    });
+    expect(result.success).toBe(false);
+  });
+
   it("rejects invalid email", () => {
     const result = signupSchema.safeParse({
       email: "not-an-email",

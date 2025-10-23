@@ -1,39 +1,67 @@
 # silver-signup-form
 
-Monorepo scaffold for Signup Form challenge.
-Simple Signup Form with pure CSS.
+Simple signup form with validation, built with React + Go.
 
-- `web/`: React 19 + TS + Vite
-- `server/`: Go HTTP server with signup API
+## Live Demo
 
-## Dev
-- Web: `cd web && npm i && npm run dev`
-- Server: `cd server && go run main.go`
+<!-- TODO  -->
 
-## Server API
+## Demo
+
+<!-- TODO after uploading the small video -->
+
+## Features
+
+- Email & password validation using zod
+- Password strength indicator
+- Real-time validation errors (constrain requirements)
+- Dark/light theme toggle
+- Keyboard accessible (a11y compliant)
+- Connected to Go backend API
+- Pure CSS, no UI libraries
+
+## Tech Stack
+
+**Frontend**: React 19, TypeScript, Vite  
+**Backend**: Go 1.22,
+**Validation**: Zod (frontend), custom regex (backend)
+**Deploy**: Netlify (web) + Koyeb (server)
+
+## Getting Started
+
+### Frontend
+```bash
+cd web
+npm install
+npm run dev
+```
+
+### Backend
+```bash
+cd server
+go run main.go
+```
+
+The frontend uses a mock API by default (3s delay). To connect to the real Go server:
+1. Start the server on port 8080
+2. Create `web/.env.local` with: `VITE_API_BASE_URL=local`
+3. Restart the frontend
+
+### Tests
+```bash
+# Frontend
+cd web && npm test
+
+# Backend
+cd server && go test ./...
+```
+
+
+## API
 - `POST /api/signup` - Mock Account Creation (validates email format & password strength)
 - `GET /healthz` - Health check
 
 ## Deploy
-Included a Dockerfile for deployment to Koyeb.
 
-## Libraries used
-- `zod`: For easy validation
-- `clsx`: To establish conditional classes
-
-Current screenshots:
-
-### Happy path
-<img width="396" height="424" alt="form-v1-success" src="https://github.com/user-attachments/assets/e94043c2-4973-481b-80c6-fb3fb5805373" />
-
-
-### Right after clicking Create Account
-<img width="418" height="392" alt="form-v1-inprogress" src="https://github.com/user-attachments/assets/1ceab363-754e-4292-9ce8-7977abfac4d5" />
-
-
-### Error 1: when there was an error on the server side (email already exists)
-<img width="407" height="430" alt="form-v1-error-mockAPI" src="https://github.com/user-attachments/assets/d65ea360-3361-42ee-a5d9-91c06a53fbd8" />
-
-
-### Error 2: when the Email and Password fields contain errors
-<img width="398" height="453" alt="form-v1-error-emailfield-passwordfield" src="https://github.com/user-attachments/assets/4a28c7db-07f3-4825-a94a-af073d987f40" />
+Frontend deploys automatically to Netlify via `netlify.toml`.  
+Backend includes Dockerfile for Koyeb deployment.

@@ -17,9 +17,9 @@ const PasswordField = ({
 }: Props) => {
 
   const [show, setShow] = useState(false);
-  const score = strengthScore(value);
   const [caps, setCaps] = useState(false);
   const [focused, setFocused] = useState(false);
+  const score = strengthScore(value);
 
   const onKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const s = e.getModifierState && e.getModifierState("CapsLock");

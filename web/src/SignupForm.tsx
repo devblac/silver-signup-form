@@ -42,6 +42,7 @@ const SignupForm = () => {
       if (e.path[0] === "password" && !next.password) next.password = e.message;
     }
     setErrors(next);
+    // console.log('validation errors:', next);
     return false;
   };
 
@@ -52,10 +53,11 @@ const SignupForm = () => {
     setServerError("");
     
     const res = await client.signup(values);
+    // console.log('signup response:', res);
 
     if (res.success) {
       setStatus("success");
-      setValues({ ...values, password:"" })
+      setValues({ ...values, password: "" });
     } else {
       setStatus("error");
       setServerError(res.error);
@@ -69,9 +71,9 @@ const SignupForm = () => {
   const setValue = (id: string, v: string) => setValues(prev => ({ ...prev, [id]: v }));
 
   const fields = [
-    { id: "email", type: "email", label: "Email", placeholder: "doe@gmail.com", describedBy: "email-hint" },
-    { id: "password", type: "password", label: "Password" },
-  ] as const;
+    { id: "email", type: "email" as const, label: "Email", placeholder: "doe@gmail.com", describedBy: "email-hint" },
+    { id: "password", type: "password" as const, label: "Password" },
+  ];
 
   return (
     <form onSubmit={onSubmit} noValidate className="card">
@@ -80,7 +82,7 @@ const SignupForm = () => {
       
       <div className="form-grid">
         <FormBuilder
-          fields={fields as any}
+          fields={fields}
           values={values}
           errors={errors}
           setValue={setValue}
