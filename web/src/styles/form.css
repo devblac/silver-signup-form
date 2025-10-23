@@ -1,12 +1,7 @@
-/* Fields */
-.field {
-  display: grid;
-  gap: 0.25rem;
-  margin-top: 0.75rem;
-}
-label {
-  font-weight: 600;
-}
+/* ------- Fields ------- */
+.field { display: grid; gap: 4px; }
+.form-grid { display: grid; gap: 16px; }
+label { font-weight: 600; }
 
 input {
   width: 100%;
@@ -17,18 +12,31 @@ input {
   background: #fff;
   color: inherit;
 }
-input:focus {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-:root[data-theme="dark"] input {
-  background: #0e0e0e;
-  border-color: #333;
+input:focus { outline: 2px solid var(--ring); outline-offset: 2px; }
+:root[data-theme="dark"] input { background: #0e0e0e; border-color: #333; }
+input.error-border { border-color: #b00020; }
+
+/* slots prevent layout jumps */
+.hint-slot { min-height: 21px; }
+.error-slot { min-height: 21px; }
+
+.error { 
+  margin: 0;
+  line-height: 1.25;
+  font-size: 0.9rem;
+  color: #b00020;
 }
 
-/* Submit button (full width) */
-form > button[type="submit"] {
-  margin-top: 0.9rem;
+/* hints */
+.hints {
+  margin: 0.5rem 0 0;
+  padding-left: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ------- Submit button ------- */
+button[type="submit"] {
   width: 100%;
   height: var(--control-h);
   border: 0;
@@ -37,48 +45,40 @@ form > button[type="submit"] {
   background: #111;
   color: #fff;
   font-weight: 600;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
 }
-form > button[type="submit"]:focus {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-form > button[type="submit"][disabled] {
-  /* opacity: 0.6; */
-  cursor: not-allowed;
-}
-:root[data-theme="dark"] form > button[type="submit"] {
-  background: #e9e9e9;
-  color: #111;
-}
+button[type="submit"]:hover { background: #222; }
+button[type="submit"]:focus { outline: 2px solid var(--ring); outline-offset: 2px; }
+button[type="submit"]:disabled { cursor: not-allowed; opacity: 0.7; }
 
-form > button[type="submit"] .spinner {
+:root[data-theme="dark"] button[type="submit"] { background: #e9e9e9; color: #111; }
+:root[data-theme="dark"] button[type="submit"]:hover { background: #d9d9d9; }
+
+/* spinner inside button */
+button[type="submit"] .spinner {
   border-color: rgba(255, 255, 255, 0.25);
   border-top-color: rgba(255, 255, 255, 1);
 }
-
-:root[data-theme="dark"] form > button[type="submit"] .spinner {
+:root[data-theme="dark"] button[type="submit"] .spinner {
   border-color: rgba(0, 0, 0, 0.25);
   border-top-color: rgba(0, 0, 0, 0.85);
 }
 
-/* Password row */
-.password-row {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-.password-row input {
-  flex: 1;
-}
+/* ------- Password row ------- */
+.password-row { display: flex; gap: 6px; align-items: center; }
+.password-row input { flex: 1; height: var(--control-h); }
 .password-row .ghost {
   flex: 0 0 auto;
-  width: 64px;
+  width: 64px; 
+  min-width: 64px;
   height: var(--control-h);
-  display: inline-grid;
+  display: inline-grid; 
   place-items: center;
 }
 
-/* Button (Show/Hide) */
+/* ghost button */
 button.ghost {
   background: transparent;
   color: inherit;
@@ -87,68 +87,53 @@ button.ghost {
   padding: 0 12px;
   cursor: pointer;
 }
-button.ghost:hover {
-  background: rgba(0, 0, 0, 0.06);
-}
-:root[data-theme="dark"] button.ghost:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
+button.ghost:hover { background: rgba(0, 0, 0, 0.06); }
+:root[data-theme="dark"] button.ghost:hover { background: rgba(255, 255, 255, 0.08); }
 
-/* Theme icon button */
+/* icon button */
 .icon-btn {
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  display: inline-grid;
-  place-items: center;
-  border: 1px solid var(--border);
-  border-radius: 9999px;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  line-height: 0;
-  font-size: 16px;
+  width: 32px; height: 32px; padding: 0;
+  display: inline-grid; place-items: center;
+  border: 1px solid var(--border); border-radius: 9999px;
+  background: transparent; color: inherit; cursor: pointer;
+  line-height: 0; font-size: 16px;
 }
-.icon-btn:hover {
-  background: rgba(0, 0, 0, 0.06);
-}
-:root[data-theme="dark"] .icon-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
+.icon-btn:hover { background: rgba(0, 0, 0, 0.06); }
+:root[data-theme="dark"] .icon-btn:hover { background: rgba(255, 255, 255, 0.08); }
 
-/* Hints & states */
-.hints {
-  margin: 0.5rem 0 0;
-  padding-left: 1rem;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-.error-border {
-  border-color: #b00020;
-}
-
-/* Spinner */
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
+/* ------- Spinner ------- */
+@keyframes spin { to { transform: rotate(360deg); } }
 .spinner {
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  vertical-align: middle;
-
+  width: 16px; height: 16px; vertical-align: middle;
   border-radius: 50%;
   border: 2px solid var(--spinner-weak);
   border-top-color: var(--spinner-strong);
-
   animation: spin 0.7s linear infinite;
 }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
 
-@media (prefers-reduced-motion: reduce) {
-  .spinner {
-    animation: none;
-  }
+/* ------- Strength meter ------- */
+.meter { height: 6px; border-radius: 9999px; background: #e5e5e5; margin-top: 6px; position: relative; overflow: hidden; }
+.meter::after { content:""; position:absolute; left:0; top:0; bottom:0; width:0%; transition: width .2s ease; }
+.meter--1::after { width:25%; background:#d9534f; }
+.meter--2::after { width:50%; background:#f0ad4e; }
+.meter--3::after { width:75%; background:#5bc0de; }
+.meter--4::after { width:100%; background:#5cb85c; }
+:root[data-theme="dark"] .meter { background:#1f1f1f; }
+
+/* ------- Toast ------- */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+  z-index: 50;
+  display: grid; grid-template-columns: 24px 1fr auto; gap: 8px; align-items: center;
+  padding: 12px 14px; border-radius: 10px;
+  background: var(--card-bg); box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  animation: fade-in .15s ease-out;
 }
+.toast .emoji { font-size: 18px; line-height: 1; }
+.toast .muted { color: var(--muted); font-size: .9rem; }
+@keyframes fade-in { from { opacity: 0; transform: translate(-50%, 4px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+/* ------- Small screens ------- */
+@media (max-width: 360px) { :root { --control-h: 44px; } }

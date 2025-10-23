@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type Props = {
   id: string;
@@ -11,11 +11,13 @@ const Field = ({ id, label, error, children }: Props) => (
   <div className="field">
     <label htmlFor={id}>{label}</label>
     {children}
-    {error && (
-      <div role="alert" className="error">
-        {error}
-      </div>
-    )}
+    <div className="error-slot">
+      {error && (
+        <div role="alert" className="error">
+          {error}
+        </div>
+      )}
+    </div>
   </div>
 );
 

@@ -1,21 +1,58 @@
-const FormStatus = ({
-  success,
-  error,
-}: {
-  success: boolean;
-  error: string;
-}) => (
-  <>
-    <div id="form-status" aria-live="polite" className="sr-only">
-      {success ? "Account created" : error ? error : ""}
-    </div>
-    {error && (
-      <div role="alert" className="error">
-        {error}
+import { useState, useEffect } from "react";
+
+const FormStatus = ({ success, error, email }: {
+    success: boolean;
+    error: string;
+    email?: string;
+  }) => {
+  const [open, setOpen] = useState(success);
+
+  
+  useEffect(() => {
+    if (success) {
+      setOpen(true);
+      const t = setTimeout(() => setOpen(false), 3000);
+      return () => clearTimeout(t);
+    }
+  }, [success]);
+
+
+  return (
+    <>
+      <div id="form-status" aria-live="polite" className="sr-only">
+        {success ? "Account created" : error ? error : ""}
       </div>
-    )}
-    {success && <div className="success">Account created (mock)</div>}
-  </>
-);
+      
+      <div className="error-slot">
+        {error && (
+          <div role="alert" className="error">
+            {error}
+          </div>
+        )}
+      </div>
+      
+      {success && open && (
+        <div className="toast" role="status">
+          <span className="emoji" aria-hidden>✅</span>
+          <div className="msg">
+            <strong>Account created</strong>
+            {email && (
+              <div className="muted">
+                Signed up as <code>{email}</code>
+              </div>
+            )}
+          </div>
+          <button
+            className="ghost"
+            onClick={() => setOpen(false)}
+            aria-label="Dismiss"
+          >
+            X
+          </button>
+        </div>
+      )}
+    </>
+  );
+}
 
 export default FormStatus;

@@ -1,27 +1,12 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { signupSchema } from "./schema";
 
-import signup from "./api";
-
-import Field from "./components/Field";
+import client from "./api";
 import FormStatus from "./components/FormStatus";
-import PasswordField from "./components/PasswordField";
 import ThemeToggle from "./components/ThemeToggle";
+import FormBuilder from "./form/FormBuilder";
 
 const SignupForm = () => {
-  {
-    /**/
-  }
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  {
-    /**/
-  }
-  const emailId = useId();
-  const passwordId = useId();
-  {
-    /**/
-  }
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -32,16 +17,21 @@ const SignupForm = () => {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
   );
-
   const [serverError, setServerError] = useState("");
-  const [capsLock, setCapsLock] = useState(false);
 
   useEffect(() => {
     emailRef.current?.focus();
   }, []);
 
+  useEffect(() => {
+    const onEsc = (e: KeyboardEvent) => { if (e.key === "Escape") setServerError(""); };
+    window.addEventListener("keydown", onEsc);
+    return () => window.removeEventListener("keydown", onEsc);
+  }, []);
+
+
   const validate = () => {
-    const r = signupSchema.safeParse({ email, password });
+    const r = signupSchema.safeParse(values);
     if (r.success) {
       setErrors({});
       return true;
@@ -60,10 +50,12 @@ const SignupForm = () => {
     if (!validate()) return;
     setStatus("submitting");
     setServerError("");
-    const res = await signup({ email, password });
+    
+    const res = await client.signup(values);
+
     if (res.success) {
       setStatus("success");
-      setPassword("");
+      setValues({ ...values, password:"" })
     } else {
       setStatus("error");
       setServerError(res.error);
@@ -71,46 +63,43 @@ const SignupForm = () => {
     }
   };
 
-  const onKeyUpPassword = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    setCapsLock(e.getModifierState && e.getModifierState("CapsLock"));
-  };
-
   const submitting = status === "submitting";
+
+  const [values, setValues] = useState({ email: "", password: "" });
+  const setValue = (id: string, v: string) => setValues(prev => ({ ...prev, [id]: v }));
+
+  const fields = [
+    { id: "email", type: "email", label: "Email", placeholder: "doe@gmail.com", describedBy: "email-hint" },
+    { id: "password", type: "password", label: "Password" },
+  ] as const;
 
   return (
     <form onSubmit={onSubmit} noValidate className="card">
       <ThemeToggle />
       <h1>Signup</h1>
-      {/**/}
-      <Field id={emailId} label="Email" error={errors.email}>
-        <input
-          id={emailId}
-          ref={emailRef}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoComplete="email"
-          aria-invalid={!!errors.email}
+      
+      <div className="form-grid">
+        <FormBuilder
+          fields={fields as any}
+          values={values}
+          errors={errors}
+          setValue={setValue}
         />
-      </Field>
-      {/**/}
-      <PasswordField
-        id={passwordId}
-        value={password}
-        onChange={setPassword}
-        onKeyUp={onKeyUpPassword}
-        error={errors.password}
-        capsLock={capsLock}
-      />
-      {/**/}
-      <button type="submit" disabled={submitting}>
-        {submitting ? (
-          <span className="spinner" aria-hidden />
-        ) : (
-          "Create Account"
-        )}
-      </button>
-      {/**/}
-      <FormStatus success={status === "success"} error={serverError} />
+        
+        <button type="submit" disabled={submitting}>
+          {submitting ? (
+            <span className="spinner" aria-hidden />
+          ) : (
+            "Create Account"
+          )}
+        </button>
+        
+        <FormStatus 
+          success={status === "success"} 
+          error={serverError} 
+          email={values.email} 
+        />
+      </div>
     </form>
   );
 };
