@@ -5,6 +5,7 @@ import "regexp"
 var (
 	emailRegex = regexp.MustCompile(`.+@.+\..+`)
 	hasNumber  = regexp.MustCompile(`[0-9]`)
+	hasUpper   = regexp.MustCompile(`[A-Z]`)
 	hasSpecial = regexp.MustCompile(`[^A-Za-z0-9]`)
 )
 
@@ -15,6 +16,9 @@ func Email(email string) bool {
 func Password(password string) (bool, string) {
 	if len(password) < 8 {
 		return false, "Password must be at least 8 characters"
+	}
+	if !hasUpper.MatchString(password) {
+		return false, "Password must include an uppercase letter"
 	}
 	if !hasNumber.MatchString(password) {
 		return false, "Password must include a number"
