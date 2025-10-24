@@ -6,9 +6,11 @@ Simple signup form with validation, built with React + Go.
 
 https://silver-signup-form.netlify.app/
 
-## Demo
+## 🎥 Demo
 
-<video src="./silver-signup-form-v2.mp4" controls width="640"></video>
+<video src="https://github.com/user-attachments/assets/9efe09cb-fa76-45a0-84e5-e61dfabae899" controls width="640"></video>
+
+[![Watch it on Youtube](https://img.youtube.com/vi/nKW8i2Q09YY/hqdefault.jpg)](https://youtube.com/shorts/nKW8i2Q09YY)
 
 ## Features
 
