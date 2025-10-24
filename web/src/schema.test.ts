@@ -10,6 +10,14 @@ describe("signup validation", () => {
     expect(result.success).toBe(true);
   });
 
+  it("rejects password without uppercase", () => {
+    const result = signupSchema.safeParse({
+      email: "test@test.com",
+      password: "password123!",
+    });
+    expect(result.success).toBe(false);
+  });
+
   it("rejects email without @", () => {
     const result = signupSchema.safeParse({
       email: "notanemail",

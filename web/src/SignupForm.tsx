@@ -91,6 +91,7 @@ const SignupForm = () => {
           values={values}
           errors={errors}
           setValue={setValue}
+          disabled={submitting}
         />
         
         <button type="submit" disabled={submitting}>

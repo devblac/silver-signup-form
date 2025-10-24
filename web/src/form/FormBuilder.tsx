@@ -3,13 +3,14 @@ import PasswordField from "../components/PasswordField";
 import type { FieldConfig } from './types';
 
 const FormBuilder = ({
-  fields, values, errors, setValue, onKeyUpPassword,
+  fields, values, errors, setValue, onKeyUpPassword, disabled = false,
 }: {
   fields: FieldConfig[];
   values: Record<string, string>;
   errors: Record<string, string|undefined>;
   setValue: (id: string, v: string) => void;
   onKeyUpPassword?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }) => {
   return (
     <>
@@ -25,6 +26,7 @@ const FormBuilder = ({
               onChange={(v) => setValue(f.id, v)}
               onKeyUp={onKeyUpPassword}
               error={errors[f.id]}
+              disabled={disabled}
             />
           );
         }
@@ -41,6 +43,7 @@ const FormBuilder = ({
               aria-invalid={!!errors[f.id]}
               autoComplete={f.type}
               className={errors[f.id] ? "error-border" : ""}
+              disabled={disabled}
             />
           </Field>
         );

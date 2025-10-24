@@ -7,13 +7,15 @@ type Props = {
   onChange: (v: string) => void;
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   error?: string;
+  disabled?: boolean;
 };
 
 const PasswordField = ({
   id,
   value,
   onChange,
-  error
+  error,
+  disabled = false
 }: Props) => {
 
   const [show, setShow] = useState(false);
@@ -42,12 +44,14 @@ const PasswordField = ({
           autoComplete="new-password"
           aria-invalid={!!error}
           className={error ? "error-border" : undefined}
+          disabled={disabled}
         />
         <button
           type="button"
           className="ghost"
           onClick={() => setShow((s) => !s)}
           aria-label={show ? "Hide password" : "Show password"}
+          disabled={disabled}
         >
           {show ? "Hide" : "Show"}
         </button>
@@ -63,9 +67,10 @@ const PasswordField = ({
         )}
       </div>
       <ul className="hints">
-        <li>Include a number</li>
-        <li>Include a special character</li>
-        <li>At least 8 characters</li>
+        <li className={value.length >= 8 ? "hint-valid" : ""}>At least 8 characters</li>
+        <li className={/[A-Z]/.test(value) ? "hint-valid" : ""}>Include uppercase letter</li>
+        <li className={/[0-9]/.test(value) ? "hint-valid" : ""}>Include a number</li>
+        <li className={/[^A-Za-z0-9]/.test(value) ? "hint-valid" : ""}>Include a special character</li>
       </ul>
       <div className={`meter meter--${score}`} aria-hidden />
     </div>
